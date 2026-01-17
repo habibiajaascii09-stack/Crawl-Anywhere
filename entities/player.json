@@ -1,0 +1,33 @@
+{
+  "format_version": "1.18.20",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:player"
+    },
+    "component_groups": {
+      "power:crawling": {
+        "minecraft:collision_box": { "width": 0.6, "height": 0.6 },
+        "minecraft:movement": { "value": 0.05 } 
+      }
+    },
+    "components": {
+      "minecraft:type_family": { "family": [ "player" ] },
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "filters": { "test": "has_tag", "value": "crawl_enabled" },
+            "event": "event:enable_crawl"
+          },
+          {
+            "filters": { "test": "has_tag", "value": "crawl_enabled", "operator": "!=" },
+            "event": "event:disable_crawl"
+          }
+        ]
+      }
+    },
+    "events": {
+      "event:enable_crawl": { "add": { "component_groups": [ "power:crawling" ] } },
+      "event:disable_crawl": { "remove": { "component_groups": [ "power:crawling" ] } }
+    }
+  }
+}
